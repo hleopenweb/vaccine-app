@@ -1,6 +1,11 @@
+import 'package:camera_app/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class UserInformation extends StatelessWidget {
+  UserInformation({Key? key, required this.userModel}) : super(key: key);
+
+  UserModel userModel;
+
   @override
   Widget build(BuildContext context) {
     const kColorAppBar = Color(0xFF332f8e);
@@ -43,230 +48,92 @@ class UserInformation extends StatelessWidget {
               ),
             ),
           )),
-      body: UserInformationScreen(),
-    );
-  }
-}
-
-class UserInformationScreen extends StatefulWidget {
-  @override
-  State createState() => UserInformationScreenState();
-}
-
-class UserInformationScreenState extends State<UserInformationScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        margin: EdgeInsets.only(top: 10),
-        child: Column(
-          children: <Widget>[
-            CircleAvatar(
-              radius: 55.0,
-              backgroundImage: NetworkImage('https://i.pravatar.cc/150?img=54'),
-              backgroundColor: Colors.transparent,
-            ),
-            Column(
-              children: <Widget>[
-                // Username
-                Container(
-                  child: Text(
-                    'Username',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.0,
-                    ),
-                  ),
-                  margin: EdgeInsets.only(left: 10.0, bottom: 5.0, top: 10.0),
-                ),
-                Container(
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.people),
-                      hintText: 'Tran Quang Duy',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        borderSide: BorderSide(
-                          color: Colors.redAccent,
-                          width: 3,
-                        ),
-                      ),
-                      contentPadding: EdgeInsets.all(5.0),
-                      hintStyle: TextStyle(color: Colors.grey),
-                    ),
-                  ),
-                  margin: EdgeInsets.only(left: 10.0, right: 10.0),
-                ),
-                // Country
-                Container(
-                  child: Text(
-                    'Country',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.0,
-                    ),
-                  ),
-                  margin: EdgeInsets.only(left: 10.0, bottom: 5.0, top: 10.0),
-                ),
-
-                Container(
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                        hintText: 'Viet Nam',
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            borderSide: BorderSide(
-                              color: Colors.redAccent,
-                              width: 3,
-                            )),
-                        contentPadding: EdgeInsets.all(5.0),
-                        hintStyle: TextStyle(color: Colors.grey)),
-                  ),
-                  margin: EdgeInsets.only(left: 10.0, right: 10.0),
-                ),
-
-                // Address
-                Container(
-                  child: Text(
-                    'Address',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.0,
-                    ),
-                  ),
-                  margin: EdgeInsets.only(left: 10.0, top: 30.0, bottom: 5.0),
-                ),
-                Container(
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                        hintText: '320/12 Trường Chinh, HCM',
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            borderSide: BorderSide(
-                              color: Colors.redAccent,
-                              width: 3,
-                            )),
-                        contentPadding: EdgeInsets.all(5.0),
-                        hintStyle: TextStyle(color: Colors.grey)),
-                  ),
-                  margin: EdgeInsets.only(left: 10.0, right: 10.0),
-                ),
-                // About me
-                Container(
-                  child: Text(
-                    'About me',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.0,
-                    ),
-                  ),
-                  margin: EdgeInsets.only(left: 10.0, top: 30.0, bottom: 5.0),
-                ),
-                Container(
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                        hintText: 'Fun, like travel, read book and play PES!!!',
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            borderSide: BorderSide(
-                              color: Colors.redAccent,
-                              width: 3,
-                            )),
-                        contentPadding: EdgeInsets.all(5.0),
-                        hintStyle: TextStyle(color: Colors.grey)),
-                  ),
-                  margin: EdgeInsets.only(left: 10.0, right: 10.0),
-                ),
-                // About me
-                Container(
-                  child: Text(
-                    'Phone',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.0,
-                    ),
-                  ),
-                  margin: EdgeInsets.only(left: 10.0, top: 30.0, bottom: 5.0),
-                ),
-                Container(
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                        hintText: '0123456789',
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            borderSide: BorderSide(
-                              color: Colors.redAccent,
-                              width: 3,
-                            )),
-                        contentPadding: EdgeInsets.all(5.0),
-                        hintStyle: TextStyle(color: Colors.grey)),
-                    keyboardType: TextInputType.number,
-                  ),
-                  margin: EdgeInsets.only(left: 10.0, right: 10.0),
-                ),
-                // About me
-                Container(
-                  child: Text(
-                    'Phone',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.0,
-                    ),
-                  ),
-                  margin: EdgeInsets.only(left: 10.0, top: 30.0, bottom: 5.0),
-                ),
-                Container(
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                        hintText: '0123456789',
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            borderSide: BorderSide(
-                              color: Colors.redAccent,
-                              width: 3,
-                            )),
-                        contentPadding: EdgeInsets.all(5.0),
-                        hintStyle: TextStyle(color: Colors.grey)),
-                    keyboardType: TextInputType.number,
-                  ),
-                  margin: EdgeInsets.only(left: 10.0, right: 10.0),
-                ),
-                // About me
-                Container(
-                  child: Text(
-                    'Phone',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.0,
-                    ),
-                  ),
-                  margin: EdgeInsets.only(left: 10.0, top: 30.0, bottom: 5.0),
-                ),
-                Container(
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                        hintText: '0123456789',
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            borderSide: BorderSide(
-                              color: Colors.redAccent,
-                              width: 3,
-                            )),
-                        contentPadding: EdgeInsets.all(5.0),
-                        hintStyle: TextStyle(color: Colors.grey)),
-                    keyboardType: TextInputType.number,
-                  ),
-                  margin: EdgeInsets.only(left: 10.0, right: 10.0),
-                ),
-
-
-              ],
-              crossAxisAlignment: CrossAxisAlignment.start,
-            )
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.only(top: 10),
+          child: Column(
+            children: <Widget>[
+              CircleAvatar(
+                radius: 55.0,
+                backgroundImage:
+                    NetworkImage('https://i.pravatar.cc/150?img=54'),
+                backgroundColor: Colors.transparent,
+              ),
+              buildUserInfoDisplay(userModel.id ?? '', 'Mã số'),
+              // buildUserInfoDisplay(controller.user.value.name ?? '', 'Họ và tên'),
+              buildUserInfoDisplay(
+                userModel.phone ?? '',
+                'Số điện thoại',
+              ),
+              buildUserInfoDisplay(
+                userModel.birthday ?? '',
+                'Ngày sinh',
+              ),
+              buildUserInfoDisplay(
+                userModel.address ?? '',
+                'Địa chỉ',
+              ),
+              buildUserInfoDisplay(
+                userModel.sex ?? '',
+                'Giới tính',
+              ),
+            ],
+          ),
         ),
+        padding: EdgeInsets.only(bottom: 20.0),
       ),
-      padding: EdgeInsets.only(bottom: 20.0),
     );
   }
+
+  Widget buildUserInfoDisplay(String getValue, String title) => Padding(
+      padding: EdgeInsets.only(bottom: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+            ),
+          ),
+          SizedBox(
+            height: 1,
+          ),
+          Container(
+            width: 350,
+            height: 40,
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+            child: Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 5),
+                  child: Text(
+                    getValue,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontSize: 16,
+                      height: 1.4,
+                      color: Colors.black.withOpacity(0.6),
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Icon(
+                  Icons.keyboard_arrow_right,
+                  color: Colors.grey,
+                  size: 40.0,
+                )
+              ],
+            ),
+          )
+        ],
+      ));
 }
