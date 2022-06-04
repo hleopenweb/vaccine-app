@@ -1,10 +1,12 @@
 
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:camera_app/user_information.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
+
+import 'models/user_model.dart';
 
 
 class GalleryPhotoViewWrapper extends StatefulWidget {
@@ -40,6 +42,44 @@ class _GalleryPhotoViewWrapperState extends State<GalleryPhotoViewWrapper> {
     setState(() {
       currentIndex = index;
     });
+  }
+
+  Future<UserModel?> callAPI(File file) async{
+    String baseUrl =
+        "http://192.168.1.11:5000/load_image";
+    final url = Uri.parse(baseUrl);
+
+    var request = http.MultipartRequest('POST', url);
+    request.files.add(
+        http.MultipartFile(
+            'upload',
+            file.readAsBytes().asStream(),
+            file.lengthSync(),
+            filename: file.path.split("/").last,
+        )
+    );
+    request.send().timeout(Duration(seconds: 60),onTimeout:(){
+      throw "TimeOut";
+    }).then((result) async {
+      http.Response.fromStream(result)
+          .then((response) {
+        if (response.statusCode == 200)
+        {
+          print("Uploaded! ");
+            print('response.body '+response.body);
+        }
+        return response.body;
+      });
+    }).catchError((err) => print('error : '+err.toString()))
+        .whenComplete(()
+    {});
+
+    // if (response.statusCode == 200) {
+    //   final dataPeople = userModelFromJson(response.);
+    //   return dataPeople;
+    // } else {
+    //   return null;
+    // }
   }
 
   @override
@@ -80,13 +120,20 @@ class _GalleryPhotoViewWrapperState extends State<GalleryPhotoViewWrapper> {
                     child: IconButton(
                       icon: Icon(Icons.send,size: 36,),
                       onPressed: () => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => UserInformation(),
-                          ),
-                        ),
-                      },
+                        callAPI(widget.galleryItem[currentIndex]).then((value){
+                          if(value!=null){
+                            print(value);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => UserInformation(),
+                              ),
+                            );
+                          }else{
+                              print(value);
+                            }
+                          }
+                      )},
                       color: Colors.blueAccent,
                     ),
                   ),

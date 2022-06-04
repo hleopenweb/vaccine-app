@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 import 'gallery_photo_view_wrapper.dart';
+import 'models/user_model.dart';
 
 class GalleryScreen extends StatelessWidget {
   final List<File> images;
@@ -61,7 +62,9 @@ class GalleryScreen extends StatelessWidget {
             .map(
               (image) =>
               GestureDetector(
-                onTap: () => open(context, image.key),
+                onTap: (){
+                  open(context, image.key);
+                },
                 child: Hero(
                     tag: image.toString(),
                     child: Image.file(image.value, fit: BoxFit.cover),
