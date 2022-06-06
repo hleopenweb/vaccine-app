@@ -1,5 +1,6 @@
 
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:camera_app/user_information.dart';
 import 'package:flutter/material.dart';
@@ -44,43 +45,61 @@ class _GalleryPhotoViewWrapperState extends State<GalleryPhotoViewWrapper> {
     });
   }
 
-  Future<UserModel?> callAPI(File file) async{
-    String baseUrl =
-        "http://192.168.1.11:5000/load_image";
-    final url = Uri.parse(baseUrl);
+  Future<String> uploadImage(File file) async {
+    String fileName = file.path.split('/').last;
 
-    var request = http.MultipartRequest('POST', url);
-    request.files.add(
-        http.MultipartFile(
-            'upload',
-            file.readAsBytes().asStream(),
-            file.lengthSync(),
-            filename: file.path.split("/").last,
-        )
-    );
-    request.send().timeout(Duration(seconds: 60),onTimeout:(){
-      throw "TimeOut";
-    }).then((result) async {
-      http.Response.fromStream(result)
-          .then((response) {
-        if (response.statusCode == 200)
-        {
-          print("Uploaded! ");
-            print('response.body '+response.body);
-        }
-        return response.body;
-      });
-    }).catchError((err) => print('error : '+err.toString()))
-        .whenComplete(()
-    {});
+    FormData data = FormData.fromMap({
+      "upload": await MultipartFile.fromFile(
+        file.path,
+        filename: fileName,
+      ),
+    });
 
-    // if (response.statusCode == 200) {
-    //   final dataPeople = userModelFromJson(response.);
-    //   return dataPeople;
-    // } else {
-    //   return null;
-    // }
+    Dio dio = new Dio();
+
+    Response response =
+    await dio.post("https://67da-2402-800-629c-e2c8-113-2edf-d1c2-123c.ap.ngrok.io/load_image", data: data);
+    return response.toString();
   }
+
+  // Future<UserModel?> callAPI(File file) async {
+  //   print(file.path.split("/").last.length);
+  //   String baseUrl =
+  //       "http://192.168.1.2:5000/load_image";
+  //   final url = Uri.parse(baseUrl);
+  //
+  //   var request = http.MultipartRequest('POST', url);
+  //   request.files.add(
+  //       http.MultipartFile(
+  //           'upload',
+  //           file.readAsBytes().asStream(),
+  //           file.lengthSync(),
+  //           filename: file.path.split("/").last,
+  //       )
+  //   );
+  //   request.send().timeout(Duration(seconds: 60),onTimeout:(){
+  //     throw "TimeOut";
+  //   }).then((result) async {
+  //     http.Response.fromStream(result)
+  //         .then((response) {
+  //       if (response.statusCode == 200)
+  //       {
+  //         print("Uploaded! ");
+  //           print('response.body '+response.body);
+  //       }
+  //       return response.body;
+  //     });
+  //   }).catchError((err) => print('error : '+err.toString()))
+  //       .whenComplete(()
+  //   {});
+  //
+  //   // if (response.statusCode == 200) {
+  //   //   final dataPeople = userModelFromJson(response.);
+  //   //   return dataPeople;
+  //   // } else {
+  //   //   return null;
+  //   // }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -119,21 +138,15 @@ class _GalleryPhotoViewWrapperState extends State<GalleryPhotoViewWrapper> {
                     padding: EdgeInsets.only(left: 5),
                     child: IconButton(
                       icon: Icon(Icons.send,size: 36,),
-                      onPressed: () => {
-                        callAPI(widget.galleryItem[currentIndex]).then((value){
-                          if(value!=null){
-                            print(value);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => UserInformation(),
-                              ),
+                      onPressed: () async {
+                          print(widget.galleryItem[currentIndex]);
+                          final data = await uploadImage(widget.galleryItem[currentIndex]);
+                          showDialog(context: context, builder: (context){
+                            return Dialog(
+                              child: Text(data.toString()),
                             );
-                          }else{
-                              print(value);
-                            }
-                          }
-                      )},
+                          });
+                      },
                       color: Colors.blueAccent,
                     ),
                   ),
