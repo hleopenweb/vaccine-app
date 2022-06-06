@@ -15,18 +15,15 @@ class UserInformation extends StatelessWidget {
           preferredSize: Size.fromHeight(60.0),
           child: AppBar(
             flexibleSpace: Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        stops: const [
-                  0.1,
-                  0.4
-                ],
-                        colors: const <Color>[
-                  kColorAppBarStart,
-                  kColorAppBar
-                ]))),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  stops: const [0.1, 0.4],
+                  colors: const <Color>[kColorAppBarStart, kColorAppBar],
+                ),
+              ),
+            ),
             leading: Padding(
               padding: EdgeInsets.only(left: 10),
               child: Image.asset(
@@ -38,10 +35,9 @@ class UserInformation extends StatelessWidget {
             ),
             title: Center(
               child: Text(
-                'Hồ sơ tiêm chủng',
-                textAlign: TextAlign.center,
+                'Hồ sơ khai báo y tế',
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 14,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
@@ -49,8 +45,10 @@ class UserInformation extends StatelessWidget {
             ),
           )),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         child: Container(
-          margin: EdgeInsets.only(top: 10),
+          margin: EdgeInsets.only(top: 20),
+          padding: EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             children: <Widget>[
               CircleAvatar(
@@ -59,23 +57,73 @@ class UserInformation extends StatelessWidget {
                     NetworkImage('https://i.pravatar.cc/150?img=54'),
                 backgroundColor: Colors.transparent,
               ),
-              buildUserInfoDisplay(userModel.id ?? '', 'Mã số'),
-              // buildUserInfoDisplay(controller.user.value.name ?? '', 'Họ và tên'),
-              buildUserInfoDisplay(
-                userModel.phone ?? '',
-                'Số điện thoại',
+              SizedBox(
+                height: 20,
               ),
+              buildUserInfoDisplay(userModel.id ?? 'Không có', 'Mã số'),
+              buildUserInfoDisplay(userModel.name ?? 'Không có', 'Họ và tên'),
               buildUserInfoDisplay(
-                userModel.birthday ?? '',
+                  userModel.patient ?? 'Không có', 'Bệnh nhân tiếp xúc'),
+              buildUserInfoDisplay(
+                userModel.birthday ?? 'Không có',
                 'Ngày sinh',
               ),
               buildUserInfoDisplay(
-                userModel.address ?? '',
+                userModel.phone ?? 'Không có',
+                'Số điện thoại',
+              ),
+              buildUserInfoDisplay(
+                userModel.address ?? 'Trống',
                 'Địa chỉ',
               ),
               buildUserInfoDisplay(
-                userModel.sex ?? '',
+                userModel.sex ?? 'Không có',
                 'Giới tính',
+              ),
+              buildUserInfoDisplay(
+                userModel.reasonCluster ?? 'Không có',
+                'Lý do đến khai báo',
+              ),
+              buildUserInfoDisplay(
+                userModel.placeCluster ?? 'Không có',
+                'Địa điểm vùng dịch',
+              ),
+              buildUserInfoDisplay(
+                userModel.timeComeCluster ?? 'Không có',
+                'Thời gian ở vùng dịch',
+              ),
+              buildUserInfoDisplay(
+                userModel.sameHome ?? 'Không có',
+                'Quan hệ với người nhiễm',
+              ),
+              buildUserInfoDisplay(
+                userModel.symptom ?? 'Không có',
+                'Triệu chứng',
+              ),
+              buildUserInfoDisplay(
+                userModel.status ?? 'Không có',
+                'Tình trạng bản thân',
+              ),
+              SizedBox(height: 20,),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.6,
+                child: ElevatedButton(
+                  onPressed: () =>Navigator.of(context).pop(),
+                  style: ElevatedButton.styleFrom(
+                    primary:  Color(0xFF332f8e),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    elevation: 10.0,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10),
+                    child: Text(
+                      'Trở lại thư viện',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
@@ -98,12 +146,8 @@ class UserInformation extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-          SizedBox(
-            height: 1,
-          ),
           Container(
-            width: 350,
-            height: 40,
+            height: 36,
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -112,6 +156,7 @@ class UserInformation extends StatelessWidget {
               ),
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
                   padding: EdgeInsets.only(left: 5),
@@ -125,11 +170,10 @@ class UserInformation extends StatelessWidget {
                     ),
                   ),
                 ),
-                Spacer(),
                 Icon(
                   Icons.keyboard_arrow_right,
                   color: Colors.grey,
-                  size: 40.0,
+                  size: 25.0,
                 )
               ],
             ),
