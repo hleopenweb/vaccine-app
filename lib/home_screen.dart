@@ -2,10 +2,18 @@ import 'package:camera/camera.dart';
 import 'package:camera_app/camera_screen.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   final List<CameraDescription> cameras;
 
   const HomeScreen({Key? key, required this.cameras}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +36,9 @@ class HomeScreen extends StatelessWidget {
                   kColorAppBarStart,
                   kColorAppBar
                 ]))),
-            leading: Padding(
-              padding: EdgeInsets.only(left: 10),
-              child: Image.asset(
-                'assets/images/icon_heart.png',
-                fit: BoxFit.contain,
-                height: 35,
-                width: 35,
-              ),
-            ),
             title: Center(
               child: Text(
-                'CỔNG THÔNG TIN TIÊM CHỦNG COVID-19',
+                'Extract Information Medical Declaration Form',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 12,
@@ -53,12 +52,23 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: TextField(
+                  controller: controller,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Host',
+                  ),
+                ),
+              ),
+              SizedBox(height: 20,),
               InkWell(
                 child: Icon(Icons.camera_alt, size: 60),
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => CameraScreen(cameras: cameras),
+                    builder: (context) => CameraScreen(cameras: widget.cameras, host: controller.text.toString()),
                   ),
                 ),
               ),

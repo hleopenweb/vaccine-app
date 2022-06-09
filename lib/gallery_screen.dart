@@ -7,8 +7,9 @@ import 'models/user_model.dart';
 
 class GalleryScreen extends StatelessWidget {
   final List<File> images;
+  final String host;
 
-  const GalleryScreen({Key? key, required this.images}) : super(key: key);
+  const GalleryScreen({Key? key, required this.images, required this.host}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +88,7 @@ class GalleryScreen extends StatelessWidget {
                 color: Colors.black,
               ),
               initialIndex: index,
+              host: host,
             ),
       ),
     );

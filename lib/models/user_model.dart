@@ -6,7 +6,6 @@ String userModelToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel {
   UserModel({
-    this.id,
     this.address,
     this.birthday,
     this.name,
@@ -21,7 +20,6 @@ class UserModel {
     this.timeComeCluster,
   });
 
-  String? id;
   String? address;
   String? birthday;
   String? name;
@@ -36,7 +34,6 @@ class UserModel {
   String? timeComeCluster;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    id: json["_id"],
     address: json["address"],
     birthday: json["birthday"],
     name: json["name"],
@@ -52,7 +49,6 @@ class UserModel {
   );
 
   Map<String, dynamic> toJson() => {
-    "_id": id,
     "address": address,
     "birthday": birthday,
     "name": name,

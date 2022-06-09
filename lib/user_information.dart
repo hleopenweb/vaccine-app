@@ -2,12 +2,20 @@ import 'package:camera_app/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class UserInformation extends StatelessWidget {
-  UserInformation({Key? key, required this.userModel}) : super(key: key);
+  UserInformation({Key? key, required this.name, required this.nguoiNha, required this.sdt, required this.ngaySinh, required this.diaChi, required this.sex, required this.status}) : super(key: key);
 
-  UserModel userModel;
+  final String? name;
+  final String? nguoiNha;
+  final String? sdt;
+  final String? ngaySinh;
+  final String? diaChi;
+  final String? sex;
+  final String? status;
+
 
   @override
   Widget build(BuildContext context) {
+    print("Gioi tinh: "+sex.toString());
     const kColorAppBar = Color(0xFF332f8e);
     const kColorAppBarStart = Color(0xFFd81d2e);
     return Scaffold(
@@ -24,18 +32,9 @@ class UserInformation extends StatelessWidget {
                 ),
               ),
             ),
-            leading: Padding(
-              padding: EdgeInsets.only(left: 10),
-              child: Image.asset(
-                'assets/images/icon_heart.png',
-                fit: BoxFit.contain,
-                height: 35,
-                width: 35,
-              ),
-            ),
             title: Center(
               child: Text(
-                'Hồ sơ khai báo y tế',
+                'Extract Information',
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.white,
@@ -60,50 +59,45 @@ class UserInformation extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              buildUserInfoDisplay(userModel.id ?? 'Không có', 'Mã số'),
-              buildUserInfoDisplay(userModel.name ?? 'Không có', 'Họ và tên'),
+              buildUserInfoDisplay(name ?? 'Không có', 'Họ và tên'),
               buildUserInfoDisplay(
-                  userModel.patient ?? 'Không có', 'Bệnh nhân tiếp xúc'),
+                  nguoiNha ?? 'Không có', 'Bệnh nhân tiếp xúc'),
               buildUserInfoDisplay(
-                userModel.birthday ?? 'Không có',
+                ngaySinh ?? 'Không có',
                 'Ngày sinh',
               ),
               buildUserInfoDisplay(
-                userModel.phone ?? 'Không có',
+                sdt ?? 'Không có',
                 'Số điện thoại',
               ),
               buildUserInfoDisplay(
-                userModel.address ?? 'Trống',
+                diaChi ?? 'Trống',
                 'Địa chỉ',
               ),
               buildUserInfoDisplay(
-                userModel.sex ?? 'Không có',
+                sex ?? 'Không có',
                 'Giới tính',
               ),
               buildUserInfoDisplay(
-                userModel.reasonCluster ?? 'Không có',
-                'Lý do đến khai báo',
+                status ?? 'Không có',
+                'Trạng thái',
               ),
-              buildUserInfoDisplay(
-                userModel.placeCluster ?? 'Không có',
-                'Địa điểm vùng dịch',
-              ),
-              buildUserInfoDisplay(
-                userModel.timeComeCluster ?? 'Không có',
-                'Thời gian ở vùng dịch',
-              ),
-              buildUserInfoDisplay(
-                userModel.sameHome ?? 'Không có',
-                'Quan hệ với người nhiễm',
-              ),
-              buildUserInfoDisplay(
-                userModel.symptom ?? 'Không có',
-                'Triệu chứng',
-              ),
-              buildUserInfoDisplay(
-                userModel.status ?? 'Không có',
-                'Tình trạng bản thân',
-              ),
+              // buildUserInfoDisplay(
+              //   userModel.placeCluster ?? 'Không có',
+              //   'Địa điểm vùng dịch',
+              // ),
+              // buildUserInfoDisplay(
+              //   userModel.timeComeCluster ?? 'Không có',
+              //   'Thời gian ở vùng dịch',
+              // ),
+              // buildUserInfoDisplay(
+              //   userModel.sameHome ?? 'Không có',
+              //   'Quan hệ với người nhiễm',
+              // ),
+              // buildUserInfoDisplay(
+              //   userModel.sta ?? 'Không có',
+              //   'Triệu chứng',
+              // ),
               SizedBox(height: 20,),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.6,
@@ -147,7 +141,7 @@ class UserInformation extends StatelessWidget {
             ),
           ),
           Container(
-            height: 36,
+            height: 50,
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -158,15 +152,19 @@ class UserInformation extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 5),
-                  child: Text(
-                    getValue,
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontSize: 16,
-                      height: 1.4,
-                      color: Colors.black.withOpacity(0.6),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 5),
+                    child: Text(
+                      getValue,
+                      textAlign: TextAlign.start,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: TextStyle(
+                        fontSize: 15,
+                        height: 1.3,
+                        color: Colors.black.withOpacity(0.6),
+                      ),
                     ),
                   ),
                 ),

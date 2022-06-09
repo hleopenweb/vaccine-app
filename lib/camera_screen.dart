@@ -7,10 +7,11 @@ import 'gallery_screen.dart';
 
 class CameraScreen extends StatefulWidget {
   final List<CameraDescription> cameras;
+  final String host;
 
   const CameraScreen({
     Key? key,
-    required this.cameras,
+    required this.cameras, required this.host,
   }) : super(key: key);
 
   @override
@@ -118,7 +119,9 @@ class _CameraScreenState extends State<CameraScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => GalleryScreen(
-                                  images: capturedImages.reversed.toList())));
+                                  images: capturedImages.reversed.toList(),
+                                  host: widget.host
+                              )));
                     },
                     child: Container(
                       height: 60,
